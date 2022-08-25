@@ -35,7 +35,7 @@ class SearchService:
         self.container_name = "covid-news"
         self.index_name = "covid-19-index"
         self.indexer_name = "covid-19-indexer"
-        self.data_source_name = "covid-19-data-source"
+        self.data_source_name = "covid-19-datasource"
 
     def create_data_source(self):
         """Setup the blob
