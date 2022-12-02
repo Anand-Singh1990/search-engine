@@ -72,7 +72,7 @@ def get_download_results_href(response, search_text):
     document = "title;date;body\n"
     for result in response.get("value"):
         title = re.sub(";", "", result["title"])
-        date = re.sub(";", "", result["timestamp"][:10])
+        date = re.sub(";", "", str(result["timestamp"]))
         body = re.sub(";", "", result["body"])
         body = re.sub("\n", "", body)
         body = body + "\n"
@@ -90,23 +90,23 @@ def get_download_results_href(response, search_text):
 
 # Title
 st.markdown(
-    "<h1 style='text-align: center; '>Covid-19 search engine</h1>",
+    "<h1 style='text-align: center; '>Vedic search engine</h1>",
     unsafe_allow_html=True,
 )
-st.markdown("<h2 style='text-align: center; '>Stay safe</h2>", unsafe_allow_html=True)
+#st.markdown("<h2 style='text-align: center; '>OM</h2>", unsafe_allow_html=True)
 
 # Logo
-logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "facemask.jpg")
+logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "monk2.png")
 robeco_logo = Image.open(logo_path)
-st.image(robeco_logo, use_column_width=True)
+st.image(robeco_logo, use_column_width=True, width = 500 )
 
 # Search bar
 search_query = st.text_input(
-    "Search for Covid-19 here", value="", max_chars=None, key=None, type="default"
+    label="", value="", max_chars=None, key=None, type="default", help="Enter your search query here"
 )
 
 # Search API
-index_name = "covid-19-index"
+index_name = "vedic-index"
 endpoint = os.environ["ACS_ENDPOINT"]
 credential = os.environ["ACS_API_KEY"]
 headers = {
@@ -120,7 +120,7 @@ search_body = {
     "search": search_query,
     "searchFields": "title",
     "searchMode": "all",
-    "select": "title, body, timestamp",
+    "select": "source, title, body, timestamp",
     "top": 100,
 }
 
@@ -130,7 +130,7 @@ if search_query != "":
 
     record_list = []
     _ = [
-        record_list.append({"title": record["title"], "body": record["body"], "timestamp": record["timestamp"]})
+        record_list.append({"source":record["source"], "title": record["title"], "body": record["body"], "timestamp": record["timestamp"]})
         for record in response.get("value")
     ]
 
@@ -148,9 +148,13 @@ if search_query != "":
             record_list,
         ):  
             st.write("**Search result:** %s." % (i+1))
-            st.write("**Title:** %s" % (record["title"]))
-            st.write("**Date:** %s" % (record["timestamp"][:10]))
-            st.write("**Body:** %s" % (record["body"]))
+            st.write("**Shlok** : %s" % (record["source"]))
+            with st.expander("**Meaning in English**"):
+                st.write("%s" % (record["title"]))
+            with st.expander("**Source**"):
+                st.write("%s" % str((record["timestamp"])))
+            with st.expander("**Context**"):
+                st.write("%s" % (record["body"]))
 
         st.sidebar.markdown(
             get_download_results_href(response, search_query), unsafe_allow_html=True

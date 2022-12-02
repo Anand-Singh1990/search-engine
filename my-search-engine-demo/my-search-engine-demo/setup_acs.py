@@ -32,10 +32,10 @@ class SearchService:
         }
         self.api_version = "api-version=2020-06-30"
         self.connection_string = os.environ['SA_CONN_STR']
-        self.container_name = "covid-news"
-        self.index_name = "covid-19-index"
-        self.indexer_name = "covid-19-indexer"
-        self.data_source_name = "covid-19-datasource"
+        self.container_name = "vedic-data"
+        self.index_name = "vedic-index"
+        self.indexer_name = "vedic-indexer"
+        self.data_source_name = "vedic-datasource"
 
     def create_data_source(self):
         """Setup the blob
@@ -72,7 +72,7 @@ class SearchService:
         """Create a schema for how the documents in the blob should be indexed
         """
         index_schema = {
-            "name": "covid-19-index",
+            "name": "vedic-index",
             "fields": [
                 {
                     "name": "id",
@@ -80,6 +80,7 @@ class SearchService:
                     "key": "true",
                     "searchable": "false",
                 },
+                
                 {
                     "name": "timestamp",
                     "type": "Edm.String",
