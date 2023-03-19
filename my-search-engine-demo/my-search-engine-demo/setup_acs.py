@@ -1,13 +1,13 @@
 # Setup a search service on an azure blob container
 import requests
 import os
+from creds import cred
 from azure.core.exceptions import HttpResponseError
 import logging
 from time import sleep
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
-# Setup a search service on an azure blob container
 import requests
 import os
 from azure.core.exceptions import HttpResponseError
@@ -25,13 +25,13 @@ class SearchService:
         API key: secret of search service
         API version: version of search API
         """
-        self.url = os.environ["ACS_ENDPOINT"]
+        self.url = cred.get("ACS_ENDPOINT")
         self.headers = {
             "Content-Type": "application/json",
-            "api-key": os.environ['ACS_API_KEY'],
+            "api-key": cred.get("ACS_API_KEY"),
         }
         self.api_version = "api-version=2020-06-30"
-        self.connection_string = os.environ['SA_CONN_STR']
+        self.connection_string = cred.get("SA_CONN_STR")
         self.container_name = "vedic-data"
         self.index_name = "vedic-index"
         self.indexer_name = "vedic-indexer"
@@ -75,22 +75,14 @@ class SearchService:
             "name": "vedic-index",
             "fields": [
                 {
-                    "name": "id",
+                    "name": "source",
                     "type": "Edm.String",
                     "key": "true",
                     "searchable": "false",
                 },
                 
                 {
-                    "name": "timestamp",
-                    "type": "Edm.String",
-                    "searchable": "false",
-                    "filterable": "false",
-                    "sortable": "false",
-                    "facetable": "false",
-                },
-                {
-                    "name": "source",
+                    "name": "sno",
                     "type": "Edm.String",
                     "searchable": "false",
                     "filterable": "false",
@@ -100,19 +92,52 @@ class SearchService:
                 {
                     "name": "title",
                     "type": "Edm.String",
-                    "searchable": "true",
+                    "searchable": "false",
                     "filterable": "false",
                     "sortable": "false",
                     "facetable": "false",
                 },
                 {
-                    "name": "body",
+                    "name": "chapter",
                     "type": "Edm.String",
                     "searchable": "true",
                     "filterable": "false",
                     "sortable": "false",
                     "facetable": "false",
                 },
+                {
+                    "name": "verse",
+                    "type": "Edm.String",
+                    "searchable": "true",
+                    "filterable": "false",
+                    "sortable": "false",
+                    "facetable": "false",
+                },
+                {
+                    "name": "sanskrit",
+                    "type": "Edm.String",
+                    "searchable": "true",
+                    "filterable": "false",
+                    "sortable": "false",
+                    "facetable": "false",
+                },
+                {
+                    "name": "hindi_trans",
+                    "type": "Edm.String",
+                    "searchable": "true",
+                    "filterable": "false",
+                    "sortable": "false",
+                    "facetable": "false",
+                },
+                {
+                    "name": "english_trans",
+                    "type": "Edm.String",
+                    "searchable": "true",
+                    "filterable": "false",
+                    "sortable": "false",
+                    "facetable": "false",
+                },
+
             ],
         }
         index_url = (

@@ -97,7 +97,7 @@ if search_query != "":
 
     record_list = []
     _ = [
-        record_list.append({"source":record["source"], "title": record["title"], "body": record["body"], "timestamp": record["timestamp"]})
+        record_list.append({"source":record["source"], "title": record["title"], "hindi_trans": record["hindi_trans"], "english_trans": record["english_trans"]})
         for record in response.get("value")
     ]
 
@@ -119,9 +119,9 @@ if search_query != "":
             with st.expander("**Meaning in English**"):
                 st.write("%s" % (record["title"]))
             with st.expander("**Source**"):
-                st.write("%s" % str((record["timestamp"])))
+                st.write("%s" % str((record["english_trans"])))
             with st.expander("**Context**"):
-                st.write("%s" % (record["body"]))
+                st.write("%s" % (record["english_trans"]))
 
         # st.sidebar.markdown(
         #     get_download_results_href(response, search_query), unsafe_allow_html=True
