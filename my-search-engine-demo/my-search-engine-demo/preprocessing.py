@@ -18,11 +18,13 @@
 from pathlib import Path
 import json
 import csv
+from BhagvadGita2 import data
 source_articles = open('data.csv')
 csvreader = csv.reader(source_articles)
 
 dataset=[]
-
+count_i = 0
+count_j = 0
 for i in csvreader:
     sno = i[0]
     title = i[1]
@@ -31,6 +33,21 @@ for i in csvreader:
     sanskrit_trans = i[4]
     hindi_trans = i[5]
     english_trans = i[6]
+    value=""
+    #print(len(data))
+    count_j = 46
+    for j in data:
+        if count_j>len(data)+46:
+            break
+        #print(j)
+        print(count_i,"----------",count_j)
+        if count_j == count_i:
+            #print(j.get("body"))
+            value = j.get("body")
+            count_j = count_j+1
+            break
+        count_j = count_j+1
+    count_i = count_i+1
     dataset.append({
         "source":"Bhagvad Gita",
         "sno":sno,
@@ -39,9 +56,13 @@ for i in csvreader:
         "verse":verse,
         "sanskrit":sanskrit_trans,
         "hindi_trans":hindi_trans,
-        "english_trans":english_trans
+        "english_trans":english_trans,
+        "context":value
+
     }
     )
+    
+
 
 json_object = json.dumps(dataset,ensure_ascii=False,indent=4)
 

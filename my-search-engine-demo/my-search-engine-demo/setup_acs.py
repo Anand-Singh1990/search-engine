@@ -75,14 +75,14 @@ class SearchService:
             "name": "vedic-index",
             "fields": [
                 {
-                    "name": "source",
+                    "name": "sno",
                     "type": "Edm.String",
                     "key": "true",
                     "searchable": "false",
                 },
                 
                 {
-                    "name": "sno",
+                    "name": "source",
                     "type": "Edm.String",
                     "searchable": "false",
                     "filterable": "false",
@@ -100,7 +100,7 @@ class SearchService:
                 {
                     "name": "chapter",
                     "type": "Edm.String",
-                    "searchable": "true",
+                    "searchable": "false",
                     "filterable": "false",
                     "sortable": "false",
                     "facetable": "false",
@@ -108,7 +108,7 @@ class SearchService:
                 {
                     "name": "verse",
                     "type": "Edm.String",
-                    "searchable": "true",
+                    "searchable": "false",
                     "filterable": "false",
                     "sortable": "false",
                     "facetable": "false",
@@ -116,7 +116,7 @@ class SearchService:
                 {
                     "name": "sanskrit",
                     "type": "Edm.String",
-                    "searchable": "true",
+                    "searchable": "false",
                     "filterable": "false",
                     "sortable": "false",
                     "facetable": "false",
@@ -124,13 +124,21 @@ class SearchService:
                 {
                     "name": "hindi_trans",
                     "type": "Edm.String",
-                    "searchable": "true",
+                    "searchable": "false",
                     "filterable": "false",
                     "sortable": "false",
                     "facetable": "false",
                 },
                 {
                     "name": "english_trans",
+                    "type": "Edm.String",
+                    "searchable": "true",
+                    "filterable": "false",
+                    "sortable": "false",
+                    "facetable": "false",
+                },
+                {
+                    "name": "context",
                     "type": "Edm.String",
                     "searchable": "true",
                     "filterable": "false",
