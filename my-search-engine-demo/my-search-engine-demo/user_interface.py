@@ -103,6 +103,7 @@ if search_query != "":
                 "title": record["title"], 
                 "hindi_trans": record["hindi_trans"], 
                 "english_trans": record["english_trans"],
+                "context": record["context"],
             })
         for record in response.get("value")
     ]
@@ -121,13 +122,13 @@ if search_query != "":
             record_list,
         ):  
             st.write("**Search result:** %s." % (i+1))
-            st.write("**Shlok** : %s" % (record["source"]))
+            st.write("**Source** : %s" % (record["source"]))
+            with st.expander("**Meaning in Hindi**"):
+                st.write("%s" % (record["hindi_trans"]))
             with st.expander("**Meaning in English**"):
-                st.write("%s" % (record["title"]))
-            with st.expander("**Source**"):
                 st.write("%s" % str((record["english_trans"])))
             with st.expander("**Context**"):
-                st.write("%s" % (record["english_trans"]))
+                st.write("%s" % (record["context"]))
 
         # st.sidebar.markdown(
         #     get_download_results_href(response, search_query), unsafe_allow_html=True
