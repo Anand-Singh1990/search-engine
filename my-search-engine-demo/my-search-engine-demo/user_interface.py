@@ -85,9 +85,9 @@ search_url = f"{endpoint}/indexes/{index_name}/docs/search?api-version=2020-06-3
 search_body = {
     "count": True,
     "search": search_query,
-    "searchFields": "title",
+    "searchFields": "english_trans, context",
     "searchMode": "all",
-    "select": "source, title, body, timestamp",
+    "select": "source, title, hindi_trans, english_trans",
     "top": 100,
 }
 
@@ -97,7 +97,14 @@ if search_query != "":
 
     record_list = []
     _ = [
-        record_list.append({"source":record["source"], "title": record["title"], "hindi_trans": record["hindi_trans"], "english_trans": record["english_trans"]})
+        record_list.append(
+            {
+                "source":record["source"],
+                "title": record["title"], 
+                "hindi_trans": record["hindi_trans"], 
+                "english_trans": record["english_trans"],
+                "context": record["context"]
+            })
         for record in response.get("value")
     ]
 

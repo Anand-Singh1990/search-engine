@@ -38,3 +38,31 @@
 #     lines = soup.find_all('p')[1]
 #     for line in lines:
 #         print(line.text)
+
+
+from creds import cred
+import requests
+index_name = "vedic-index"
+endpoint = cred.get("ACS_ENDPOINT")
+credential = cred.get("ACS_API_KEY")
+headers = {
+    "Content-Type": "application/json",
+    "api-key": credential,
+}
+search_url = f"{endpoint}/indexes/{index_name}/docs/search?api-version=2020-06-30"
+
+search_body = {
+    "count": True,
+    "search": "arjun",
+    "searchFields": "english_trans,context",
+    "searchMode": "all",
+    "select": "source, title, hindi_trans, english_trans, context",
+    "top": 100,
+}
+
+
+
+response = requests.post(search_url, headers=headers, json=search_body).json()
+
+print(response)
+
