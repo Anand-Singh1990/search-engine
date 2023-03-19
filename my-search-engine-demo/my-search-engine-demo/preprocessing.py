@@ -57,8 +57,7 @@ for i in csvreader:
         "sanskrit":sanskrit_trans,
         "hindi_trans":hindi_trans,
         "english_trans":english_trans,
-        "context":value
-
+        "context":value,
     }
     )
     

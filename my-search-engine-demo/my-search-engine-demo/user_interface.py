@@ -87,7 +87,7 @@ search_body = {
     "search": search_query,
     "searchFields": "english_trans, context",
     "searchMode": "all",
-    "select": "source, title, hindi_trans, english_trans",
+    "select": "source, title, sanskrit,  hindi_trans, english_trans",
     "top": 100,
 }
 
@@ -101,6 +101,7 @@ if search_query != "":
             {
                 "source":record["source"],
                 "title": record["title"], 
+                "sanskrit":record.get("sanskrit"),
                 "hindi_trans": record["hindi_trans"], 
                 "english_trans": record.get("english_trans"),
                 "context": record.get("context"),
@@ -123,6 +124,8 @@ if search_query != "":
         ):  
             st.write("**Search result:** %s." % (i+1))
             st.write("**Source** : %s" % (record["source"]))
+            with st.expander("**Shlok**"):
+                st.write("%s" % (record["sanskrit"]))
             with st.expander("**Meaning in Hindi**"):
                 st.write("%s" % (record["hindi_trans"]))
             with st.expander("**Meaning in English**"):
