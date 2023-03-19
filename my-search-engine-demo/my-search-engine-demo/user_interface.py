@@ -103,7 +103,7 @@ if search_query != "":
                 "title": record["title"], 
                 "hindi_trans": record["hindi_trans"], 
                 "english_trans": record["english_trans"],
-                "context": record["context"]
+                "context": record["context"],
             })
         for record in response.get("value")
     ]
