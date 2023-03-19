@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+
+#virtual env
+my-search-engine-demo/my-search-engine-demo/anand
+
 # C extensions
 *.so
 

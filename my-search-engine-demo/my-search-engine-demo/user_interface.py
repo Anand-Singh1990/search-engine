@@ -1,6 +1,6 @@
 import os
 import re
-
+from creds import cred
 from azure.core.credentials import AzureKeyCredential
 import itertools
 import requests
@@ -8,40 +8,7 @@ from PIL import Image
 import base64
 import streamlit as st
 
-# https://gist.github.com/treuille/2ce0acb6697f205e44e3e0f576e810b7
 def paginator(label, articles, articles_per_page=10, on_sidebar=True):
-    """Lets the user paginate a set of article.
-    Parameters
-    ----------
-    label : str
-        The label to display over the pagination widget.
-    article : Iterator[Any]
-        The articles to display in the paginator.
-    articles_per_page: int
-        The number of articles to display per page.
-    on_sidebar: bool
-        Whether to display the paginator widget on the sidebar.
-        
-    Returns
-    -------
-    Iterator[Tuple[int, Any]]
-        An iterator over *only the article on that page*, including
-        the item's index.
-    Example
-    -------
-    This shows how to display a few pages of fruit.
-    >>> fruit_list = [
-    ...     'Kiwifruit', 'Honeydew', 'Cherry', 'Honeyberry', 'Pear',
-    ...     'Apple', 'Nectarine', 'Soursop', 'Pineapple', 'Satsuma',
-    ...     'Fig', 'Huckleberry', 'Coconut', 'Plantain', 'Jujube',
-    ...     'Guava', 'Clementine', 'Grape', 'Tayberry', 'Salak',
-    ...     'Raspberry', 'Loquat', 'Nance', 'Peach', 'Akee'
-    ... ]
-    ...
-    ... for i, fruit in paginator("Select a fruit page", fruit_list):
-    ...     st.write('%s. **%s**' % (i, fruit))
-    """
-
     # Figure out where to display the paginator
     if on_sidebar:
         location = st.sidebar.empty()
@@ -63,29 +30,29 @@ def paginator(label, articles, articles_per_page=10, on_sidebar=True):
     return itertools.islice(enumerate(articles), min_index, max_index)
 
 
-def get_download_results_href(response, search_text):
-    """Generates a hyperlink allowing the data in a given panda dataframe to be downloaded
-    in:  dataframe
-    out: href string
-    """
+# def get_download_results_href(response, search_text):
+#     """Generates a hyperlink allowing the data in a given panda dataframe to be downloaded
+#     in:  dataframe
+#     out: href string
+#     """
 
-    document = "title;date;body\n"
-    for result in response.get("value"):
-        title = re.sub(";", "", result["title"])
-        date = re.sub(";", "", str(result["timestamp"]))
-        body = re.sub(";", "", result["body"])
-        body = re.sub("\n", "", body)
-        body = body + "\n"
-        line = ";".join([title, date, body])
-        document = document + line
+#     document = "title;date;body\n"
+#     for result in response.get("value"):
+#         title = re.sub(";", "", result["title"])
+#         date = re.sub(";", "", str(result["timestamp"]))
+#         body = re.sub(";", "", result["body"])
+#         body = re.sub("\n", "", body)
+#         body = body + "\n"
+#         line = ";".join([title, date, body])
+#         document = document + line
 
-    camelcase = "_".join(search_text.split())
-    csv = document
-    b64 = base64.b64encode(
-        csv.encode()
-    ).decode()  # some strings <-> bytes conversions necessary here
-    href = f'<a download="{camelcase}.csv" href="data:file/csv;base64,{b64}">Download results</a>'
-    return href
+#     camelcase = "_".join(search_text.split())
+#     csv = document
+#     b64 = base64.b64encode(
+#         csv.encode()
+#     ).decode()  # some strings <-> bytes conversions necessary here
+#     href = f'<a download="{camelcase}.csv" href="data:file/csv;base64,{b64}">Download results</a>'
+#     return href
 
 
 # Title
@@ -107,8 +74,8 @@ search_query = st.text_input(
 
 # Search API
 index_name = "vedic-index"
-endpoint = os.environ["ACS_ENDPOINT"]
-credential = os.environ["ACS_API_KEY"]
+endpoint = cred.get("ACS_ENDPOINT")
+credential = cred.get("ACS_API_KEY")
 headers = {
     "Content-Type": "application/json",
     "api-key": credential,
@@ -156,9 +123,9 @@ if search_query != "":
             with st.expander("**Context**"):
                 st.write("%s" % (record["body"]))
 
-        st.sidebar.markdown(
-            get_download_results_href(response, search_query), unsafe_allow_html=True
-        )
+        # st.sidebar.markdown(
+        #     get_download_results_href(response, search_query), unsafe_allow_html=True
+        # )
         
     else:
         st.write(f"No Search results, please try again with different keywords")
