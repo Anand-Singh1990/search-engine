@@ -173,3 +173,5 @@ Found relevant information regarding Covid-19.
 Identified an opportunity to alter this solution to a different dataset.
 Identified an opportunity to alter this solution to replace the search engine with a different analytics engine.
 Don't hesitate to share what you've learned in the comments below, or to contribute to the code base!
+
+Roughly added some text to practise the git and the github. If you don't mind i'm going to raise a pull request.
